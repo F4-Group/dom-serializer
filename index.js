@@ -34,7 +34,7 @@ function formatAttrs(attributes, opts) {
 
     output += key;
     if ((value !== null && value !== '') || opts.xmlMode) {
-        output += '="' + (opts.decodeEntities ? entities.encodeXML(value) : value) + '"';
+        output += '="' + (opts.decodeEntities ? entities.escape(value, true, false, opts.outputUtf8) : value) + '"';
     }
   }
 
@@ -133,7 +133,7 @@ function renderText(elem, opts) {
 
   // if entities weren't decoded, no need to encode them back
   if (opts.decodeEntities && !(elem.parent && elem.parent.name in unencodedElements)) {
-    data = entities.encodeXML(data);
+    data = entities.escape(data, false, false, opts.outputUtf8);
   }
 
   return data;
